@@ -1,9 +1,9 @@
 // declaring variables
 const body = document.querySelector('body')
-const hourly = document.querySelector('.hourly')
+const section = document.querySelector('section')
 
   // hide hourly forecast on load when location permission is not granted
-  hourly.style.display = "none"
+  section.style.display = "none"
 
 // window onload
 window.addEventListener('load', () => {
@@ -21,7 +21,7 @@ function fetchingApi() {
     navigator.geolocation.getCurrentPosition(position => {
       console.log(position)
       // show hourly forecast when location is granted
-      hourly.style.display = "block"
+      section.style.display = "block"
 
       long = position.coords.longitude
       lat = position.coords.latitude
