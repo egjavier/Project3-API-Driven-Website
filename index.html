@@ -10,15 +10,24 @@
 
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="p-5 d-flex flex-column justify-content-center align-items-center">
+<body class="d-flex flex-column justify-content-center align-items-center p-5">
   <header class="container"></header>
   
-  <main class="container bg row p-3 rounded mt-2 text-white">
-    <div class="mt-3 p-0 d-flex justify-content-center">
-      <input type="text" id="changeLocation" class="text-secondary h-100 rounded-pill" placeholder="Type a location here ..." required>
-      <button type="submit" class="btn btn-light rounded-pill ms-2">Search</button>
+  <!-- current weather, search location bar, location -->
+  <main class="bg container row rounded text-white pb-5 pt-3 ps-3 pe-3 mt-2 mt-4">
+    <div class="search rounded-pill d-flex justify-content-center p-3">
+      <input type="text" id="changeLocation" class="text-secondary rounded border-0 h-100" placeholder="Type a location here ..." required>
+      <button type="submit" class="btn btn-light text-center p-0 ms-2">Search</button>
     </div>
   </main>
+
+  <!-- hourly forecast -->
+  <section 
+    class="bg container rounded text-white pb-5 pt-3 ps-3 pe-3 mt-2 mt-4">
+      <h5 class="d-flex flex-column justify-content-center align-items-center fw-bold mt-3">Hourly Forecast</h5>
+      <div class="hourly position-relative mt-3"></div>
+  </section>
+
 
   <footer class="container-fluid"></footer>
   <!-- bootstrap -->

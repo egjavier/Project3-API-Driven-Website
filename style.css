@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;700;900&family=Young+Serif&display=swap');
 
+/* general */
 *{
   margin: 0;
   padding: 0;
@@ -10,51 +11,106 @@ body {
   background-color: rgb(2,0,36);
   background-image: linear-gradient(225deg, rgba(2,0,36,1) 0%, rgba(10,10,143,1) 76%);
 }
+
+/* main section */
 .bg {
   background-color: rgba(2, 0, 36, 0.377);
   box-shadow: 5px 5px 10px rgba(255, 255, 255, 0.507);
   font-family: young serif;
 }
-.sunrise > img,
-.sunset > img {
-  width: 2.5vw;
+.search > input::placeholder,
+.search > input,
+.search > button {
+  font: 400 1.5vw poppins;
+  width: 30vw;
 }
+.search > button { width: 10vw }
+.sunrise > img,
+.sunset > img {width: 2.5vw }
+
 .sunrise > span,
 .sunset > span,
-.weatherDescription {
+.forecast,
+.weatherDescription { 
   font: 500 1.3vw "Poppins";
+  text-wrap: wrap;
 }
+
 .sunrise, .sunset, .weatherDescription {
   background-color: rgb(2,0,36);
   box-shadow: 2px 5px 5px rgba(2, 0, 36, 0.388);
 }
-.city, .time {
-  font: 400 2.5vw "young serif";
-}
-.country, .date {
-  font: 400 1.3vw "poppins";
-}
+.city, .time { font: 400 2.5vw "young serif" }
+.country, .date { font: 400 1.3vw "poppins" }
 .temp {
   font: 900 10vw "young serif";
+  width: fit-content;
+  margin-top: -2vw;
 }
-.temp > span {
-  font: 400 4vw poppins;
-}
-.icon {
-  top: 3%;
-  left: 12%;
-  width: 18%
-}
-#changeLocation {
-  text-align: center;
-}
+.temp > span { font: 400 4vw poppins }
+#changeLocation { text-align: center}
 .forecast {
   letter-spacing: .5vw;
   text-decoration: none;
 }
+.forecast:hover { text-decoration: underline;}
+.icon {
+  top: 2vw;
+  left: -2vw;
+  width: 5vw;
+}
+
+/* Hourly forecast section */
+h5 { font: 400 1.5vw "poppins" }
+.hourly {
+  display: grid !important;
+  grid-template-columns: repeat(24, 25%);;
+  column-gap: 2vw;
+  overflow: auto;
+  white-space: nowrap;
+ }
+.hourly::-webkit-scrollbar { display: none }
+.hourly > div { background-color: rgba(2, 0, 36, 0.377) }
+.tempHourly {
+  font: 400 2.5vw "young serif";
+  background-color: rgba(255, 255, 255, 0.75);
+  color: rgb(2,0,36);
+}
 
 
 
+/* main section */
+@media screen and (max-width: 700px) {
+  .sunrise > span,
+  .sunset > span,
+  .forecast,
+  .weatherDescription { font: 500 2vw "Poppins" }
+  
+  .forecast{ margin-top: 1vw }
+  .city, .time { font: 400 4.5vw "young serif" }
+  .country, .date { font: 400 2vw "poppins" }
+  .temp { font: 900 16vw "young serif" }
+
+  .search > input::placeholder,
+  .search > input,
+  .search > button { 
+    font: 400 2.5vw poppins;
+  }
+  .search > input { width: 40vw; }
+  .search > button { width: 15vw }
+
+  .icon {
+    top: 4vw;
+    left: -3vw;
+    width: 8vw;
+  }
+}
+/* hourly forecast section */
+@media screen and (max-width: 600px) {
+  h5 { font: 400 3vw "poppins"}
+  .hourly { grid-template-columns: repeat(24, 45%) }
+  .tempHourly { font: 400 4vw "young serif" }
+}
 @media screen and (max-width: 450px) {
   h1 { font: 900 5vw 'younf serif' }
 }

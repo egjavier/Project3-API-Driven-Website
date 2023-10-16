@@ -1,5 +1,9 @@
 // declaring variables
 const body = document.querySelector('body')
+const hourly = document.querySelector('.hourly')
+
+  // hide hourly forecast on load when location permission is not granted
+  hourly.style.display = "none"
 
 // window onload
 window.addEventListener('load', () => {
@@ -7,6 +11,7 @@ window.addEventListener('load', () => {
   header()
 })
 
+// fetching API
 function fetchingApi() {
   let long;
   let lat;
@@ -15,6 +20,8 @@ function fetchingApi() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
       console.log(position)
+      // show hourly forecast when location is granted
+      hourly.style.display = "block"
 
       long = position.coords.longitude
       lat = position.coords.latitude
@@ -33,7 +40,6 @@ function fetchingApi() {
   } 
 }
 
-
 // header and title
 function header() {
   const header = document.querySelector('header')
@@ -49,42 +55,59 @@ function header() {
 function currentWeather(data) {
   const main = document.querySelector('main')
   // city, country, date, time, sunset, sunrise
-  const rightSide = `
-    <div class="col-6 mt-4">
+  const  leftSide = `
+    <div class="col-sm-6 mt-4">
       <div class="col-4 w-100 text-center">
-        <p class="city m-0">${data.location.name}</p>
-        <p class="country m-0 fst-italic">${data.location.region}, ${data.location.country}</p>
+        <p class="city m-0">
+          ${data.location.name}
+        </p>
+        <p class="country fst-italic m-0">
+          ${data.location.region}, ${data.location.country}
+        </p>
       </div>
-      <div class="col-4 mt-3 w-100 text-center">
-        <p class="time m-0">${data.location.localtime.slice(11)}</p>
-        <p class="date m-0 fst-italic">${data.location.localtime.slice(0, 10).replace(/-/g, "/")}</p>
+      <div class="col-4 text-center mt-3 w-100">
+        <p class="time m-0">
+          ${data.location.localtime.slice(11)}
+        </p>
+        <p class="date fst-italic m-0">
+          ${data.location.localtime.slice(0, 10).replace(/-/g, "/")}
+        </p>
       </div>
       <div class="col-4 mt-3 w-100">
-        <div class="sunrise text-center rounded-pill p-2">
+        <div class="sunrise text-center rounded-pill d-flex justify-content-center p-2">
           <img src="images/sun.png" alt="a picture of the sun">
-          <span class="time m-0 fst-italic">Sunrise ${data.forecast.forecastday[0].astro.sunrise}</span>
+          <span class="time fst-italic m-0 ps-2">
+            Sunrise ${data.forecast.forecastday[0].astro.sunrise}
+          </span>
         </div>
-        <div class="sunset mt-3 text-center rounded-pill p-2">
+        <div class="sunset text-center rounded-pill d-flex justify-content-center p-2 mt-3">
           <img src="images/moon.png" alt="a picture of the moon">
-          <span class="time m-0 fst-italic">Sunset ${data.forecast.forecastday[0].astro.sunset}</span>
+          <span class="time fst-italic ps-2  m-0">
+            Sunset ${data.forecast.forecastday[0].astro.sunset}
+          </span>
         </div>
       </div>
     </div>
   `
 
   // icon, temp, textDescription, future forecast
-  const leftSide = `
-    <div class="col-6 mt-3">
-      <div class="col-8 position-relative w-100">
-        <p class="temp text-center">
-          ${data.forecast.forecastday[0].day.avgtemp_c}<span>℃</span>
+  const rightSide= `
+    <div class="col-sm-6 mt-4">
+      <div class="col-8 text-center d-flex flex-column justify-content-center align-items-center w-100">
+        <div class="temp position-relative d-flex justify-content-center align-items-center mb-3">
+          ${data.current.temp_c}<span>℃</span>
+          <img 
+          class="icon position-absolute" 
+          src="${data.current.condition.icon}" 
+          alt="weather icon">
+        </div>
+        <p class="weatherDescription rounded-pill text-center fst-italic p-2 w-100">
+          ${data.current.condition.text}
         </p>
-        <p class="weatherDescription rounded-pill p-2 text-center">${data.forecast.forecastday[0].day.condition.text}</p>
-        <img class="icon position-absolute" src="${data.forecast.forecastday[0].day.condition.icon}" alt="weather icon">
       </div>
-      <div class="col-4 w-100 text-center">
+      <div class="col-4 text-center mt-3 w-100">
         <a class="forecast text-light" href="#">
-          See 9-Day forecast →
+          See Daily forecast →
         </a>
       </div>
 
@@ -93,4 +116,32 @@ function currentWeather(data) {
   // append children to parent main
   main.innerHTML += leftSide;
   main.innerHTML += rightSide;
+
+  hourlyWeather(data)
+}
+
+// hourly forecast
+function hourlyWeather(data) {
+  const hourlyContainer = document.querySelector('.hourly')
+    // creating 24 divs
+    for (i = 0; i < 24; i++) {
+      const time = data.forecast.forecastday[0].hour[i].time.slice(11)
+      hourlyContainer.innerHTML += `
+        <div 
+          class="rounded-4 d-flex flex-column justify-content-center align-items-center mt-3 p-3" 
+          id="time-${time}">
+            <span class="time">${time}</span>
+            <img 
+              class="icon mt-3" 
+              src="${data.forecast.forecastday[0].hour[i].condition.icon}" alt="weather icon"
+            >
+            <span class="weatherDescription text-center fst-italic rounded-2 w-100 p-1 mt-3">
+              ${data.forecast.forecastday[0].hour[i].condition.text}
+            </span>
+            <span class="tempHourly text-center rounded-2 w-100 mt-3">
+              ${data.forecast.forecastday[0].hour[i].temp_c}℃
+            </span>   
+        </div>
+      `
+    }
 }
