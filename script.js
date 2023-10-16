@@ -26,7 +26,7 @@ function fetchingApi() {
       long = position.coords.longitude
       lat = position.coords.latitude
 
-      const api = `http://api.weatherapi.com/v1/forecast.json?key=3f5f1e7f0c3f4ee4baa135432230210&q=${lat},${long}&days=10&aqi=no&alerts=no`
+      const api = `https://api.weatherapi.com/v1/forecast.json?key=3f5f1e7f0c3f4ee4baa135432230210&q=${lat},${long}&days=10&aqi=no&alerts=no`
       fetch(api)
         .then(response => response.json())
         .then(data => {
