@@ -11,6 +11,7 @@ body {
   background-color: rgb(2,0,36);
   background-image: linear-gradient(225deg, rgba(2,0,36,1) 0%, rgba(10,10,143,1) 76%);
 }
+h1 { font: 900 6vw 'younf serif' }
 
 /* main section */
 .bg {
@@ -21,18 +22,18 @@ body {
 .search > input::placeholder,
 .search > input,
 .search > button {
-  font: 400 1.5vw poppins;
+  font: 400 2vw poppins;
   width: 30vw;
 }
-.search > button { width: 10vw }
+.search > button { width: 15vw }
 .sunrise > img,
-.sunset > img {width: 2.5vw }
+.sunset > img {width: 4vw }
 
 .sunrise > span,
 .sunset > span,
 .forecast,
 .weatherDescription { 
-  font: 500 1.3vw "Poppins";
+  font: 500 2.5vw "Poppins";
   text-wrap: wrap;
 }
 
@@ -40,14 +41,14 @@ body {
   background-color: rgb(2,0,36);
   box-shadow: 2px 5px 5px rgba(2, 0, 36, 0.388);
 }
-.city, .time { font: 400 2.5vw "young serif" }
-.country, .date { font: 400 1.3vw "poppins" }
+.city, .time { font: 400 5vw "young serif" }
+.country, .date { font: 400 2.4vw "poppins" }
 .temp {
-  font: 900 10vw "young serif";
+  font: 900 15vw "young serif";
   width: fit-content;
   margin-top: -2vw;
 }
-.temp > span { font: 400 4vw poppins }
+.temp > span { font: 400 5vw poppins }
 #changeLocation { text-align: center}
 .forecast {
   letter-spacing: .5vw;
@@ -56,12 +57,12 @@ body {
 .forecast:hover { text-decoration: underline;}
 .icon {
   top: 2vw;
-  left: -2vw;
-  width: 5vw;
+  left: -4vw;
+  width: 9vw;
 }
 
 /* Hourly forecast section */
-h5 { font: 400 1.5vw "poppins" }
+h5 { font: 400 3vw "poppins" }
 .hourly {
   display: grid !important;
   grid-template-columns: repeat(24, 25%);;
@@ -72,45 +73,58 @@ h5 { font: 400 1.5vw "poppins" }
 .hourly::-webkit-scrollbar { display: none }
 .hourly > div { background-color: rgba(2, 0, 36, 0.377) }
 .tempHourly {
-  font: 400 2.5vw "young serif";
+  font: 400 4vw "young serif";
   background-color: rgba(255, 255, 255, 0.75);
   color: rgb(2,0,36);
+}
+
+/* footer */
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white;
+  font: 400 2vw 'Young Serif', serif;
+  letter-spacing: .5vw;
+  text-align: center;
+  padding: 1vw 0;
 }
 
 
 
 /* main section */
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 576px) {
+  h1 { font: 900 6vw 'younf serif' }
   .sunrise > span,
   .sunset > span,
   .forecast,
-  .weatherDescription { font: 500 2vw "Poppins" }
+  .weatherDescription { font: 500 4vw "Poppins" }
   
   .forecast{ margin-top: 1vw }
-  .city, .time { font: 400 4.5vw "young serif" }
-  .country, .date { font: 400 2vw "poppins" }
-  .temp { font: 900 16vw "young serif" }
+  .city, .time { font: 400 6.5vw "young serif" }
+  .country, .date { font: 400 4vw "poppins" }
+  .temp { font: 900 25vw "young serif" }
 
   .search > input::placeholder,
   .search > input,
   .search > button { 
-    font: 400 2.5vw poppins;
+    font: 400 3vw poppins;
   }
-  .search > input { width: 40vw; }
+  .search > input { width: 45vw }
   .search > button { width: 15vw }
 
   .icon {
     top: 4vw;
     left: -3vw;
-    width: 8vw;
+    width: 10vw;
   }
-}
-/* hourly forecast section */
-@media screen and (max-width: 600px) {
-  h5 { font: 400 3vw "poppins"}
-  .hourly { grid-template-columns: repeat(24, 45%) }
-  .tempHourly { font: 400 4vw "young serif" }
-}
-@media screen and (max-width: 450px) {
-  h1 { font: 900 5vw 'younf serif' }
+
+  /* hourly forecast section */
+  h5 { font: 400 5vw "poppins"}
+  .hourly { grid-template-columns: repeat(24, 50%) }
+  .tempHourly { font: 400 6vw "young serif" }
+
+  /* footer */
+  footer {  font: 400 3.5vw 'Young Serif', serif  }
 }

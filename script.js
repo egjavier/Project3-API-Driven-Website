@@ -4,15 +4,17 @@ const section = document.querySelector('section')
 
   // hide hourly forecast on load when location permission is not granted
   section.style.display = "none"
+  // allow location search even when the location permission is not granted
+  searchingLocation()
 
 // window onload
 window.addEventListener('load', () => {
-  fetchingApi()
+  locationPermitted()
   header()
 })
 
-// fetching API
-function fetchingApi() {
+// if location permission is allowed
+function locationPermitted() {
   let long;
   let lat;
 
@@ -26,20 +28,27 @@ function fetchingApi() {
       long = position.coords.longitude
       lat = position.coords.latitude
 
-      const api = `https://api.weatherapi.com/v1/forecast.json?key=3f5f1e7f0c3f4ee4baa135432230210&q=${lat},${long}&days=10&aqi=no&alerts=no`
-      fetch(api)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
+      let api = `https://api.weatherapi.com/v1/forecast.json?key=3f5f1e7f0c3f4ee4baa135432230210&q=${lat},${long}&days=10&aqi=no&alerts=no`
+      fetchApi(api)
 
-          // main section info
-          currentWeather(data)
-        })
-        .catch(error => console.log(error))
     })
-  } 
+  }
 }
 
+// fetch api
+function fetchApi(api) {
+  fetch(api)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+
+      // main section info
+      currentWeather(data)
+      searchingLocation(api,data)
+      getDailyForecast(data)
+    })
+    .catch(error => console.log(error))
+}
 // header and title
 function header() {
   const header = document.querySelector('header')
@@ -65,7 +74,7 @@ function currentWeather(data) {
           ${data.location.region}, ${data.location.country}
         </p>
       </div>
-      <div class="col-4 text-center mt-3 w-100">
+      <div class="col-4 text-center mt-3 w-100 mb-5">
         <p class="time m-0">
           ${data.location.localtime.slice(11)}
         </p>
@@ -123,13 +132,14 @@ function currentWeather(data) {
 // hourly forecast
 function hourlyWeather(data) {
   const hourlyContainer = document.querySelector('.hourly')
+
     // creating 24 divs
     for (i = 0; i < 24; i++) {
       const time = data.forecast.forecastday[0].hour[i].time.slice(11)
       hourlyContainer.innerHTML += `
         <div 
           class="rounded-4 d-flex flex-column justify-content-center align-items-center mt-3 p-3" 
-          id="time-${time}">
+          id="time-${time.slice(0,2)}">
             <span class="time">${time}</span>
             <img 
               class="icon mt-3" 
@@ -140,8 +150,74 @@ function hourlyWeather(data) {
             </span>
             <span class="tempHourly text-center rounded-2 w-100 mt-3">
               ${data.forecast.forecastday[0].hour[i].temp_c}℃
-            </span>   
+            </span>  
         </div>
       `
     }
+}
+
+// seacrh a location
+function searchingLocation(api, data) {
+  const location = document.querySelector('input')
+  const search = document.querySelector('#search')
+  const main = document.querySelector('main')
+  const hourlyContainer = document.querySelector('.hourly')
+
+  search.addEventListener('click', () => {
+    // show hourly forecast when location is granted
+    section.style.display = "block"
+    main.innerHTML = `
+      <div class="search rounded-pill d-flex justify-content-center p-3 mb-5">
+        <input 
+          type="text" 
+          id="changeLocation"  
+          class="text-secondary rounded border-0 h-100" placeholder="Type a location here ..." 
+          required>
+        <button 
+          id="search" 
+          type="submit" 
+          class="btn btn-light text-center p-0 ms-2">
+            Search
+        </button>
+      </div>
+    `
+    hourlyContainer.innerHTML = ''
+    api = `https://api.weatherapi.com/v1/forecast.json?key=3f5f1e7f0c3f4ee4baa135432230210&q=${location.value}&days=10&aqi=no&alerts=no`
+    fetchApi(api, data)
+
+    console.log(location.value)
+    console.log(api)
+
+  })
+}
+
+// see daily forecast
+function getDailyForecast(data) {
+  const forecast = document.querySelector('.forecast')
+    forecast.addEventListener('click', () => {
+      // hide hourly container
+      section.style.display = "none"
+
+      const main = document.querySelector('main')
+      main.innerHTML = `
+        <div class="search rounded-pill d-flex justify-content-center p-3 mb-5">
+          <input 
+            type="text" 
+            id="changeLocation"  
+            class="text-secondary rounded border-0 h-100" placeholder="Type a location here ..." 
+            required>
+          <button 
+            id="search" 
+            type="submit" 
+            class="btn btn-light text-center p-0 ms-2">
+              Search
+          </button>
+        </div>
+      `
+      // create divs for forecast
+      for (let i = 0; i < data.forecast.forecastday.length; i++) {
+
+      }
+  
+    })
 }
