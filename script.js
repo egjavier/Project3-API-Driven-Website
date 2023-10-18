@@ -53,10 +53,10 @@ function fetchApi(api) {
 function header() {
   const header = document.querySelector('header')
   header.innerHTML += `
-    <h1 
+    <a href="index.html"><h1 
     class="bg text-white text-center p-3 rounded"
     >🌦️ Weather Checker
-    </h1>
+    </h1></a>
   `
 }
 
@@ -130,7 +130,7 @@ function currentWeather(data) {
 }
 
 // hourly forecast
-function hourlyWeather(data) {
+function hourlyWeather(data, time) {
   const hourlyContainer = document.querySelector('.hourly')
 
     // creating 24 divs
@@ -194,30 +194,42 @@ function searchingLocation(api, data) {
 // see daily forecast
 function getDailyForecast(data) {
   const forecast = document.querySelector('.forecast')
+  const main = document.querySelector('main')
+
     forecast.addEventListener('click', () => {
       // hide hourly container
-      section.style.display = "none"
-
-      const main = document.querySelector('main')
+      section.style.display = 'none'
       main.innerHTML = `
-        <div class="search rounded-pill d-flex justify-content-center p-3 mb-5">
-          <input 
-            type="text" 
-            id="changeLocation"  
-            class="text-secondary rounded border-0 h-100" placeholder="Type a location here ..." 
-            required>
-          <button 
-            id="search" 
-            type="submit" 
-            class="btn btn-light text-center p-0 ms-2">
-              Search
-          </button>
-        </div>
+        <div class="daily row d-flex justify-content-center"></div>
+      `
+      body.innerHTML += `
+        <a class="back position-relative" href="index.html">← Back</a>
       `
       // create divs for forecast
-      for (let i = 0; i < data.forecast.forecastday.length; i++) {
-
+      for (let i = 1; i < data.forecast.forecastday.length; i++) {
+        const daily = document.querySelector('.daily')
+        daily.innerHTML += `
+          <div class="day col-sm-5 rounded-4 d-flex flex-column justify-content-center align-items-center p-3">
+          <span class="dayTime fst-italic rounded-3 text-center mt-3">
+            ${data.forecast.forecastday[i].date.replace(/-/g, '•')}
+          </span>
+            <img class="dayImage" src="${data.forecast.forecastday[i].day.condition.icon}" alt="weather icon">
+            <span class="dayTemp"><b>${data.forecast.forecastday[i].day.avgtemp_c}</b><span>℃</span></span>
+            <span class="dayText rounded-4 text-center p-2">
+              ${data.forecast.forecastday[i].day.condition.text}
+            </span>
+            <span 
+              class="daySunrise rounded-4 text-center p-2">
+                <b>Sunrise </b>
+                <i>${data.forecast.forecastday[i].astro.sunrise}</i>
+            </span>
+            <span 
+              class="daySunset rounded-4 text-center p-2 mb-3">
+                <b>Sunset </b>
+                <i>${data.forecast.forecastday[i].astro.sunset}</i>
+            </span>
+          </div>
+        `
       }
-  
     })
 }

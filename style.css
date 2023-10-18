@@ -12,6 +12,7 @@ body {
   background-image: linear-gradient(225deg, rgba(2,0,36,1) 0%, rgba(10,10,143,1) 76%);
 }
 h1 { font: 900 6vw 'younf serif' }
+a{ text-decoration: inherit }
 
 /* main section */
 .bg {
@@ -32,6 +33,7 @@ h1 { font: 900 6vw 'younf serif' }
 .sunrise > span,
 .sunset > span,
 .forecast,
+.back,
 .weatherDescription { 
   font: 500 2.5vw "Poppins";
   text-wrap: wrap;
@@ -41,7 +43,7 @@ h1 { font: 900 6vw 'younf serif' }
   background-color: rgb(2,0,36);
   box-shadow: 2px 5px 5px rgba(2, 0, 36, 0.388);
 }
-.city, .time { font: 400 5vw "young serif" }
+.city, .time, .day { font: 400 5vw "young serif" }
 .country, .date { font: 400 2.4vw "poppins" }
 .temp {
   font: 900 15vw "young serif";
@@ -50,10 +52,12 @@ h1 { font: 900 6vw 'younf serif' }
 }
 .temp > span { font: 400 5vw poppins }
 #changeLocation { text-align: center}
-.forecast {
+.forecast,
+.back {
   letter-spacing: .5vw;
   text-decoration: none;
 }
+.back:hover, 
 .forecast:hover { text-decoration: underline;}
 .icon {
   top: 2vw;
@@ -65,7 +69,7 @@ h1 { font: 900 6vw 'younf serif' }
 h5 { font: 400 3vw "poppins" }
 .hourly {
   display: grid !important;
-  grid-template-columns: repeat(24, 25%);;
+  grid-template-columns: repeat(24, 25%);
   column-gap: 2vw;
   overflow: auto;
   white-space: nowrap;
@@ -78,6 +82,39 @@ h5 { font: 400 3vw "poppins" }
   color: rgb(2,0,36);
 }
 
+/* daily forecast */
+.day {
+  background-color: rgba(2, 0, 36, 0.377);
+  margin: 2vw;
+  gap: 2vw;
+}
+.dayTime { 
+  font: 500 4vw Poppins;
+  background-color: rgba(255, 255, 255, 0.203);
+  color: white;
+  width: 100%
+}
+.dayImage{ width: 8vw }
+.dayTemp { font: 500 10vw young serif }
+.dayTemp > span {
+  font: 500 4vw young serif;
+  color: rgba(255, 255, 255, 0.717);
+}
+.dayText{
+  font: 400 2vw poppins;
+  color: rgba(255, 255, 255, 0.664);
+  width: 100%;
+}
+.daySunrise, .daySunset {
+  background-color: rgb(2,0,36);
+  font: 500 2.5vw "Poppins";
+  width: 100%;
+}
+.back {
+  font: 500 2.5vw "Poppins";
+  color: white;
+  bottom: 2.5vw;
+}
 /* footer */
 footer {
   position: absolute;
@@ -102,7 +139,7 @@ footer {
   .weatherDescription { font: 500 4vw "Poppins" }
   
   .forecast{ margin-top: 1vw }
-  .city, .time { font: 400 6.5vw "young serif" }
+  .city, .time, .day { font: 400 6.5vw "young serif" }
   .country, .date { font: 400 4vw "poppins" }
   .temp { font: 900 25vw "young serif" }
 
@@ -119,11 +156,21 @@ footer {
     left: -3vw;
     width: 10vw;
   }
+    
+  /* daily forecast */
+  .dayTime { font: 500 8vw Poppins }
+  .dayImage{ width: 20vw }
 
   /* hourly forecast section */
   h5 { font: 400 5vw "poppins"}
+  .day { gap: 5vw }
   .hourly { grid-template-columns: repeat(24, 50%) }
   .tempHourly { font: 400 6vw "young serif" }
+  .dayTemp { font: 500 20vw young serif }
+  .dayTemp > span { font: 500 8vw young serif  }
+  .dayText{ font: 400 4vw poppins }
+  .daySunrise, .daySunset { font: 500 4vw "Poppins" }
+  .dayForecast{ font: 500 3vw "Poppins" }
 
   /* footer */
   footer {  font: 400 3.5vw 'Young Serif', serif  }
