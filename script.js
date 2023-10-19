@@ -130,15 +130,16 @@ function currentWeather(data) {
 }
 
 // hourly forecast
-function hourlyWeather(data, time) {
+function hourlyWeather(data) {
   const hourlyContainer = document.querySelector('.hourly')
+  let currentTime = data.location.localtime.slice(11)
 
     // creating 24 divs
     for (i = 0; i < 24; i++) {
       const time = data.forecast.forecastday[0].hour[i].time.slice(11)
       hourlyContainer.innerHTML += `
         <div 
-          class="rounded-4 d-flex flex-column justify-content-center align-items-center mt-3 p-3" 
+          class=" hours rounded-4 d-flex flex-column justify-content-center align-items-center mt-3 p-3" 
           id="time-${time.slice(0,2)}">
             <span class="time">${time}</span>
             <img 
@@ -151,8 +152,19 @@ function hourlyWeather(data, time) {
             <span class="tempHourly text-center rounded-2 w-100 mt-3">
               ${data.forecast.forecastday[0].hour[i].temp_c}℃
             </span>  
-        </div>
+        </div>  
       `
+    }   
+
+    // auto scroll hourly forecast to current time
+    const hours = document.querySelectorAll('.hours')
+    console.log(hours.length)
+    for (let i = 0; i < hours.length ; i++) {
+      const time = data.forecast.forecastday[0].hour[i].time.slice(11)
+      console.log(currentTime)
+      if (currentTime.slice(0, 2) === time.slice(0,2)) {
+        return location.href = `#time-${time.slice(0,2)}`
+      }
     }
 }
 
@@ -187,7 +199,6 @@ function searchingLocation(api, data) {
 
     console.log(location.value)
     console.log(api)
-
   })
 }
 
