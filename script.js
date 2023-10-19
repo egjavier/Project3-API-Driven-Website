@@ -154,17 +154,6 @@ function hourlyWeather(data) {
             </span>  
         </div>  
       `
-    }   
-
-    // auto scroll hourly forecast to current time
-    const hours = document.querySelectorAll('.hours')
-    console.log(hours.length)
-    for (let i = 0; i < hours.length ; i++) {
-      const time = data.forecast.forecastday[0].hour[i].time.slice(11)
-      console.log(currentTime)
-      if (currentTime.slice(0, 2) === time.slice(0,2)) {
-        return location.href = `#time-${time.slice(0,2)}`
-      }
     }
 }
 
